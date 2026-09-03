@@ -1,0 +1,9 @@
+.popup-hide {
+  display: block;
+}
+
+@media (max-width: 9999px) {
+  body.in-popup .popup-hide {
+    display: none;
+  }
+}

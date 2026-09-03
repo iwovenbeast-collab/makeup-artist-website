@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUPANJALI’S MAKEUP ARTISTRY | Professional Makeup Artist</title>
+  <meta name="description" content="RUPANJALI’S MAKEUP ARTISTRY – Professional bridal and party makeup artist based in Kolkata, accepting bookings across India." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Custom Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            peach: '#F6C1B1',
+            blush: '#FADADD',
+            softpink: '#F9A8D4'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-white/80 backdrop-blur-md shadow-sm popup-hide">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold tracking-wide text-pink-600">RUPANJALI’S MAKEUP ARTISTRY</h1>
+      <nav class="hidden md:flex space-x-6 font-medium">
+        <a href="#" class="hover:text-pink-500">Home</a>
+        <a href="#portfolio" class="hover:text-pink-500">Portfolio</a>
+        <a href="#services" class="hover:text-pink-500">Services</a>
+        <a href="#booking" class="hover:text-pink-500">Book</a>
+        <a href="#contact" class="hover:text-pink-500">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-24 bg-gradient-to-r from-blush via-white to-peach">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Text -->
+      <div>
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
+          Enhancing Beauty<br />
+          <span class="text-pink-600">One Face at a Time</span>
+        </h2>
+        <p class="mt-6 text-lg text-gray-700">
+          Professional bridal & occasion makeup by <strong>Rupanjali Banerjee</strong>.
+          Based in Kolkata, accepting bookings all over India.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#booking" class="px-8 py-3 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 transition">
+            Book Appointment
+          </a>
+          <a href="https://wa.me/918637375351" target="_blank" class="px-8 py-3 border border-pink-600 text-pink-600 rounded-full hover:bg-pink-50 transition">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="relative">
+        <img src="assets/images/hero.jpg" alt="Rupanjali Makeup Work" class="rounded-3xl shadow-2xl" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-3xl font-bold text-center mb-12">Services</h3>
+
+      <div class="grid md:grid-cols-4 gap-8">
+        <div class="p-6 bg-blush rounded-2xl text-center shadow">
+          <h4 class="font-semibold text-lg">Bridal Makeup</h4>
+        </div>
+        <div class="p-6 bg-blush rounded-2xl text-center shadow">
+          <h4 class="font-semibold text-lg">Party Makeup</h4>
+        </div>
+        <div class="p-6 bg-blush rounded-2xl text-center shadow">
+          <h4 class="font-semibold text-lg">Engagement Makeup</h4>
+        </div>
+        <div class="p-6 bg-blush rounded-2xl text-center shadow">
+          <h4 class="font-semibold text-lg">Photoshoot Makeup</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section id="booking" class="py-20 bg-gradient-to-r from-peach to-blush">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h3 class="text-3xl font-bold">Book Your Date</h3>
+      <p class="mt-4 text-gray-700">Make your special day even more beautiful.</p>
+      <button id="openBookingBtn" class="inline-block mt-8 px-10 py-4 bg-pink-600 text-white rounded-full shadow-xl hover:bg-pink-700 transition">
+        Check Availability
+      </button>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <footer id="contact" class="py-10 bg-white border-t">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p class="font-semibold">RUPANJALI’S MAKEUP ARTISTRY</p>
+      <p class="text-gray-600 mt-2">Kolkata • Available All Over India</p>
+      <div class="mt-4 flex justify-center space-x-6">
+        <a href="https://www.instagram.com/___rupanjali/" target="_blank" class="text-pink-600 hover:underline">Instagram</a>
+        <a href="tel:+918637375351" class="text-pink-600 hover:underline">Call</a>
+        <a href="https://wa.me/918637375351" target="_blank" class="text-pink-600 hover:underline">WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+  <footer class="py-6 text-center text-sm text-gray-500">
+    © 2026 Rupanjali’s Makeup Artistry · All Rights Reserved
+
+    <div class="mt-2">
+      <a href="http://localhost:8080/admin/login"
+        class="text-xs text-gray-400 hover:text-pink-500">
+        Admin Login
+      </a>
+    </div>
+  </footer>
+
+  <!-- Booking Popup Modal -->
+  <div id="bookingModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-xl relative overflow-y-auto max-h-[90vh]">
+
+      <!-- Close Button -->
+      <button id="closeBookingModal"
+        class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl">
+        ✕
+      </button>
+
+      <!-- IFRAME loads booking page -->
+      <iframe
+        src="frontend/booking.html"
+        class="w-full h-[80vh] border-none rounded-3xl">
+      </iframe>
+
+    </div>
+  </div>
+<script src="frontend/js/config.js"></script>
+<script src="frontend/js/home-booking.js"></script>
+
+</body>
+</html>
