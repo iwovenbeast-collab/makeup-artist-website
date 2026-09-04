@@ -85,6 +85,10 @@
                     Create Story
                 </a>
 
+                <a href="<?= base_url('admin/portfolio') ?>" class="admin-mobile-link">
+                    Portfolio
+                </a>
+
                 <a href="<?= base_url('admin/services') ?>" class="admin-mobile-link">
                     Services
                 </a>

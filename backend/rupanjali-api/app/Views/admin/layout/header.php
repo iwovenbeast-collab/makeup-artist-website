@@ -66,7 +66,8 @@
         .admin-main {
             min-height: 100vh;
             padding: 40px;
-            margin-left: 270px;
+            /*it disrupting the design of the page. The margin-left is commented out to allow the main content to take full width on smaller screens.
+            margin-left: 270px; */
             background: #faf6f3;
         }
 

@@ -12,6 +12,33 @@ The public website is designed to present the makeup artist's brand,
 portfolio, services, stories, and booking experience. The admin panel is
 used to manage bookings, availability, and stories.
 
+# Rupanjali Makeup Artistry Website
+
+A makeup artist portfolio and booking website with a React frontend and CodeIgniter 4 backend.
+
+## Features
+
+- Public makeup artist profile
+- Services section
+- Database-backed portfolio gallery
+- Stories and blogs
+- Optional video or YouTube content for stories
+- Booking form
+- Booking availability management
+- Admin dashboard
+- Admin booking management
+- Admin services management
+- Admin portfolio management
+- MySQL database integration
+
+## Project structure
+
+```text
+makeup-artist-website/
+├── frontend-react/          # React + Vite frontend
+├── backend/rupanjali-api/   # CodeIgniter 4 backend
+└── README.md
+
 ------------------------------------------------------------------------
 
 ## 1. Project Architecture
