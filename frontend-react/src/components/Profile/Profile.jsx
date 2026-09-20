@@ -30,11 +30,11 @@ export default function Profile() {
 
               <div className="aspect-[4/5] rounded-[220px_220px_30px_30px] overflow-hidden shadow-2xl">
 
-                <img
-                  src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=85"
-                  alt="Makeup artist"
-                  className="w-full h-full object-cover"
-                />
+                 <img
+		  src="/images/blogs/blog_1_pic.jpeg"
+		  alt="Rupanjali Makeup Artistry"
+		  className="w-full h-full object-cover"
+		/>
 
               </div>
 
