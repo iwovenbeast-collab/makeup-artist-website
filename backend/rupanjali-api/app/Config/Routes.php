@@ -28,6 +28,7 @@ $routes->group('api', function ($routes) {
 
     $routes->get('portfolio', 'Api\PortfolioController::index');
     $routes->get('services', 'Api\ServiceController::index');
+    $routes->get('home', 'Api\HomeController::index');
     
 });
 
@@ -40,6 +41,10 @@ $routes->group('admin', function ($routes) {
 
     // Dashboard
     $routes->get('dashboard', 'Admin\DashboardController::index');
+
+    // Home content
+    $routes->get('home', 'Admin\HomeController::index');
+    $routes->post('home/update', 'Admin\HomeController::update');
 
     // Blogs
     $routes->get('blogs', 'Admin\BlogController::index');

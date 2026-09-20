@@ -8,7 +8,9 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api";
+import { APP_CONFIG } from "../../config/app";
+
+const API_URL = `${APP_CONFIG.API_BASE_URL}/api`;
 
 function formatDate(dateString) {
   if (!dateString) return "";

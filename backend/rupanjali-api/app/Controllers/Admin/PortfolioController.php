@@ -23,6 +23,29 @@ class PortfolioController extends BaseController
         return null;
     }
 
+    private function getUploadPath(): string
+    {
+        return FCPATH . 'uploads/portfolio';
+    }
+
+    private function deleteImageFile(?string $filename): void
+    {
+        if (!$filename) {
+            return;
+        }
+
+        // Do not attempt to delete remote URLs.
+        if (filter_var($filename, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $path = $this->getUploadPath() . DIRECTORY_SEPARATOR . basename($filename);
+
+        if (is_file($path)) {
+            @unlink($path);
+        }
+    }
+
     public function index()
     {
         if ($redirect = $this->checkAdmin()) {
@@ -114,22 +137,58 @@ class PortfolioController extends BaseController
                 ->with('error', 'Please upload a valid portfolio image.');
         }
 
-        $uploadPath = FCPATH . 'uploads/portfolio';
+        $allowedTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+        ];
+
+        if (!in_array($image->getMimeType(), $allowedTypes, true)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Only JPG, PNG, and WebP images are allowed.');
+        }
+
+        // 5 MB maximum.
+        if ($image->getSizeByUnit('mb') > 5) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Portfolio image must be 5 MB or smaller.');
+        }
+
+        $uploadPath = $this->getUploadPath();
 
         if (!is_dir($uploadPath)) {
             mkdir($uploadPath, 0775, true);
         }
 
         $imageName = $image->getRandomName();
-        $image->move($uploadPath, $imageName);
 
-        $this->portfolioModel->insert([
-            'title' => $title,
-            'category' => $category,
-            'image' => $imageName,
-            'sort_order' => $sortOrder,
-            'status' => $status,
-        ]);
+        if (!$image->move($uploadPath, $imageName)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Unable to save the uploaded image.');
+        }
+
+        try {
+            $this->portfolioModel->insert([
+                'title' => $title,
+                'category' => $category,
+                'image' => $imageName,
+                'sort_order' => $sortOrder,
+                'status' => $status,
+            ]);
+        } catch (\Throwable $e) {
+            $this->deleteImageFile($imageName);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Unable to create portfolio item.');
+        }
 
         return redirect()
             ->to('/admin/portfolio')
@@ -192,22 +251,69 @@ class PortfolioController extends BaseController
             'status' => $status,
         ];
 
+        $oldImage = $item['image'] ?? '';
+        $newImageName = null;
+
         $image = $this->request->getFile('image');
 
         if ($image && $image->isValid() && !$image->hasMoved()) {
-            $uploadPath = FCPATH . 'uploads/portfolio';
+
+            $allowedTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+            ];
+
+            if (!in_array($image->getMimeType(), $allowedTypes, true)) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Only JPG, PNG, and WebP images are allowed.');
+            }
+
+            if ($image->getSizeByUnit('mb') > 5) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Portfolio image must be 5 MB or smaller.');
+            }
+
+            $uploadPath = $this->getUploadPath();
 
             if (!is_dir($uploadPath)) {
                 mkdir($uploadPath, 0775, true);
             }
 
-            $imageName = $image->getRandomName();
-            $image->move($uploadPath, $imageName);
+            $newImageName = $image->getRandomName();
 
-            $data['image'] = $imageName;
+            if (!$image->move($uploadPath, $newImageName)) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Unable to save the new image.');
+            }
+
+            $data['image'] = $newImageName;
         }
 
-        $this->portfolioModel->update($id, $data);
+        try {
+            $this->portfolioModel->update($id, $data);
+        } catch (\Throwable $e) {
+
+            if ($newImageName) {
+                $this->deleteImageFile($newImageName);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Unable to update portfolio item.');
+        }
+
+        // Delete the old local image only after the database update succeeds.
+        if ($newImageName && $oldImage !== $newImageName) {
+            $this->deleteImageFile($oldImage);
+        }
 
         return redirect()
             ->to('/admin/portfolio')
@@ -228,7 +334,17 @@ class PortfolioController extends BaseController
                 ->with('error', 'Portfolio item not found.');
         }
 
-        $this->portfolioModel->delete($id);
+        $oldImage = $item['image'] ?? '';
+
+        try {
+            $this->portfolioModel->delete($id);
+        } catch (\Throwable $e) {
+            return redirect()
+                ->to('/admin/portfolio')
+                ->with('error', 'Unable to delete portfolio item.');
+        }
+
+        $this->deleteImageFile($oldImage);
 
         return redirect()
             ->to('/admin/portfolio')

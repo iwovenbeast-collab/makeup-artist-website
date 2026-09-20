@@ -8,7 +8,9 @@ import {
   Maximize2,
 } from "lucide-react";
 
-const API_URL = "http://localhost:8080";
+import { APP_CONFIG } from "../../config/app";
+
+const API_URL = APP_CONFIG.API_BASE_URL;
 
 const categories = [
   "All",
@@ -19,13 +21,23 @@ const categories = [
 ];
 
 const getPortfolioImage = (image) => {
-  if (!image) return "";
+  if (!image) {
+    return "/images/portfolio/home_pic.jpeg";
+  }
 
   if (image.startsWith("http://") || image.startsWith("https://")) {
     return image;
   }
 
-  return `${API_URL}${image.startsWith("/") ? image : `/${image}`}`;
+  if (image.startsWith("/uploads/")) {
+    return `${API_URL}${image}`;
+  }
+
+  if (image.startsWith("/images/")) {
+    return image;
+  }
+
+  return `${API_URL}/uploads/portfolio/${image}`;
 };
 
 export default function Portfolio() {

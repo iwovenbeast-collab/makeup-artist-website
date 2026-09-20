@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { bookingApi } from "../../services/api";
+import { APP_CONFIG } from "../../config/app";
 
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = APP_CONFIG.API_BASE_URL;
 
 const EVENT_TYPES = [
   "Bridal Makeup",
