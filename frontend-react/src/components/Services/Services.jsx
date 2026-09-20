@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import {
   Sparkles,
@@ -11,7 +10,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const API_URL = "http://localhost:8080";
+import axios from "axios";
+import { APP_CONFIG } from "../../config/app";
+
+const API_URL = APP_CONFIG.API_BASE_URL;
 
 const SERVICE_ICONS = {
   crown: Crown,
