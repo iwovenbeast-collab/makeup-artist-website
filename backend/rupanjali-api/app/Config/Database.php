@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => 'Rough#infinity@2026',
-        'database'     => 'artistry',
+        'hostname'     => getenv('MYSQLHOST') ?: 'localhost',
+        'username'     => getenv('MYSQLUSER') ?: 'root',
+        'password'     => getenv('MYSQLPASSWORD') ?: '',
+        'database'     => getenv('MYSQLDATABASE') ?: 'artistry',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => (int) (getenv('MYSQLPORT') ?: 3306),
         'numberNative' => false,
         'dateFormat'   => [
             'date'     => 'Y-m-d',
